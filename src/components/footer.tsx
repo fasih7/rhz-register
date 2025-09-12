@@ -1,5 +1,4 @@
-// components/Footer.tsx
-export default function Footer() {
+export function Footer() {
   return (
     <footer
       style={{ backgroundColor: "#f5fbf2" }}
