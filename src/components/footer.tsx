@@ -1,8 +1,12 @@
-export function Footer() {
+interface FooterProps {
+  className?: string;
+}
+
+export function Footer({ className = "" }: FooterProps) {
   return (
     <footer
       style={{ backgroundColor: "#f5fbf2" }}
-      className="rounded-t-xl mt-12 w-full"
+      className={`rounded-t-xl mt-12 w-full ${className}`}
     >
       <div className="container mx-auto px-8 py-6 flex flex-col md:flex-row justify-between items-center text-gray-700 text-sm">
         <p className="mb-4 md:mb-0">

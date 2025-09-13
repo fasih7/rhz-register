@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
-export function Header() {
+
+interface HeaderProps {
+  className?: string;
+}
+
+export function Header({ className = "" }: HeaderProps) {
   const navigate = useNavigate();
   return (
     <header
       style={{ backgroundColor: "#2c8949" }}
-      className="rounded-b-xl w-full"
+      className={`rounded-b-xl w-full ${className}`}
     >
       <nav className="flex items-center justify-between px-12 py-4.5">
         {/* Logo */}
