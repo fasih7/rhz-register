@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { DropdownMenu } from "../components/utils/Dropdown";
 import {
   districts,
   tehsilsData,
   propertyAreaData,
 } from "../shared/static.data";
-import { useRegisterForm } from "../hooks/useRegisterForm";
+// import { useRegisterForm } from "../hooks/useRegisterForm";
 
 // Left Sidebar Component
 function RegistersSidebar({
@@ -179,7 +180,34 @@ function RegisterBookPlaceholder() {
 }
 
 export function Registers() {
-  const { formData, updateField, resetForm, isFormValid } = useRegisterForm();
+  // Simple state management - keeping it simple for now
+  const [formData, setFormData] = useState({
+    searchQuery: "",
+    district: "",
+    tehsil: "",
+    mouza: "",
+    year: "",
+  });
+
+  const updateField = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      searchQuery: "",
+      district: "",
+      tehsil: "",
+      mouza: "",
+      year: "",
+    });
+  };
+
+  const isFormValid =
+    formData.district && formData.tehsil && formData.mouza && formData.year;
+
+  // Original hook code (commented out for future use)
+  // const { formData, updateField, resetForm, isFormValid } = useRegisterForm();
 
   return (
     <div className="min-h-screen bg-[#f2f8ef]">

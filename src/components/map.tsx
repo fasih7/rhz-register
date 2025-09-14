@@ -7,6 +7,7 @@ interface MapProps {
   className?: string;
   height?: string;
   width?: string;
+  bounds?: string; // "BOX(xmin ymin,xmax ymax)"
 }
 
 const Map = ({
@@ -15,18 +16,32 @@ const Map = ({
   className = "",
   height = "500px",
   width = "100%",
+  bounds,
 }: MapProps) => {
   const mapRef = useRef<L.Map | null>(null);
   const [mapError, setMapError] = useState<string | null>(null);
+
+  // Helper: parse BOX string to Leaflet bounds
+  const parseBox = (box: string): L.LatLngBoundsExpression => {
+    const coords = box.replace("BOX(", "").replace(")", "").split(",");
+    const [minX, minY] = coords[0].trim().split(" ").map(Number);
+    const [maxX, maxY] = coords[1].trim().split(" ").map(Number);
+
+    // Leaflet expects: [[southWestLat, southWestLng], [northEastLat, northEastLng]]
+    return [
+      [minY, minX],
+      [maxY, maxX],
+    ];
+  };
 
   useEffect(() => {
     if (mapRef.current) return;
 
     try {
-      // Initialize map
+      // Initialize map with default center/zoom
       mapRef.current = L.map("map").setView(center, zoom);
 
-      // Satellite Layer (Esri)
+      // Tile layer (Satellite)
       L.tileLayer(
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         {
@@ -35,24 +50,37 @@ const Map = ({
         }
       ).addTo(mapRef.current);
 
-      // Add error handling for tile loading
+      // Tile error handling
       mapRef.current.on("tileerror", () => {
         setMapError(
           "Failed to load map tiles. Please check your internet connection."
         );
       });
+
+      // If bounds provided, fit map to bounds
+      if (bounds) {
+        const leafletBounds = parseBox(bounds);
+        mapRef.current.fitBounds(leafletBounds);
+
+        // Optional: adjust zoom after fitting bounds
+        const fittedZoom = mapRef.current.getZoom();
+        if (fittedZoom) {
+          mapRef.current.setZoom(fittedZoom);
+        }
+      }
     } catch (error) {
       setMapError("Failed to initialize map. Please refresh the page.");
       console.error("Map initialization error:", error);
     }
 
+    // Cleanup on unmount
     return () => {
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
       }
     };
-  }, [center, zoom]);
+  }, [center, zoom, bounds]);
 
   if (mapError) {
     return (

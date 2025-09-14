@@ -1,11 +1,46 @@
+import { useEffect, useState } from "react";
 import Map from "../components/map";
 import { MainButton } from "./utils/Button";
 import { DropdownMenu } from "./utils/Dropdown";
-import { districts, tehsilsData } from "../shared/static.data";
-import { useRegisterForm } from "../hooks/useRegisterForm";
+import {
+  districts,
+  mouzaData,
+  mouzaZoom,
+  tehsilsData,
+} from "../shared/static.data";
+// import { useRegisterForm } from "../hooks/useRegisterForm";
 
 export function HeroSection() {
-  const { formData, updateField, isFormValid } = useRegisterForm();
+  const [currentBounds, setCurrentBounds] = useState<undefined | string>(
+    undefined
+  );
+  const [formData, setFormData] = useState({
+    district: "",
+    tehsil: "",
+    mouza: "",
+  });
+
+  const updateField = (field: string, value: string) => {
+    if (field === "district") {
+      setCurrentBounds(tehsilsData.extent[0].extent);
+      return setFormData({ district: value, tehsil: "", mouza: "" });
+    }
+    if (field === "tehsil") {
+      setCurrentBounds(mouzaData.extent[0].extent);
+      return setFormData((prev) => ({ ...prev, [field]: value, mouza: "" }));
+    }
+    setCurrentBounds(mouzaZoom.extent[0].extent);
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const isFormValid = formData.district && formData.tehsil && formData.mouza;
+
+  // Original hook code (commented out for future use)
+  // const { formData, updateField, isFormValid } = useRegisterForm();
+
+  useEffect(() => {
+    setCurrentBounds("BOX(69.12 27.50,75.57 34.20)");
+  }, []);
 
   // Convert data to dropdown options
   const districtOptions = districts.data.map((district) => ({
@@ -18,11 +53,11 @@ export function HeroSection() {
     label: tehsil.name,
   }));
 
-  const mouzaOptions = [
-    { value: "1", label: "Sample Mouza 1" },
-    { value: "2", label: "Sample Mouza 2" },
-    { value: "3", label: "Sample Mouza 3" },
-  ];
+  const mouzaOptions = mouzaData.data.map((mouza) => ({
+    value: mouza.id?.toString() || "",
+    label: mouza.name,
+  }));
+
   return (
     <main className="flex-1">
       <section className="container mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12 px-8 py-16">
@@ -78,7 +113,7 @@ export function HeroSection() {
         </div>
 
         {/* Right Map Section */}
-        <Map />
+        <Map bounds={currentBounds || undefined} />
       </section>
     </main>
   );
