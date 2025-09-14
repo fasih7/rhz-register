@@ -1,6 +1,6 @@
-import { HeroSection } from "../components/Hero";
+import { HeroOJldSection } from "../components/HeroOld";
 
-export function Home() {
+export function HomeOld() {
   return (
     <div className="min-h-screen flex flex-col relative bg-gradient-to-br from-green-50 via-white to-blue-50">
       {/* Background Pattern */}
@@ -11,7 +11,7 @@ export function Home() {
         }}
       ></div>
 
-      <HeroSection />
+      <HeroOJldSection />
     </div>
   );
 }

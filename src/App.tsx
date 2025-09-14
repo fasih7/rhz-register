@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { Registers } from "./pages/Registers";
 import { Footer } from "./components/footer";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { HomeOld } from "./pages/HomeOld";
 
 // Loading component
 const LoadingSpinner = () => (
@@ -46,6 +47,7 @@ export default function App() {
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/old" element={<HomeOld />} />
               <Route path="/registers" element={<Registers />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
