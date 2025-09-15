@@ -4,6 +4,15 @@ export const districts = {
       id: 1,
       name: "Lahore",
     },
+    {
+      id: 2,
+      name: "Toba",
+    },
+  ],
+  extent: [
+    {
+      extent: "BOX(69.12 27.50,75.57 34.20)",
+    },
   ],
 };
 
@@ -14,7 +23,7 @@ export const tehsilsData = {
       name: "Aziz Bhatti Town",
     },
     {
-      id: null,
+      id: 7,
       name: "Cantonment",
     },
     {

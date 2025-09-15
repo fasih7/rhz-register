@@ -1,69 +1,137 @@
-# React + TypeScript + Vite
+# RHZ & Intiqal Register Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application for managing RHZ (Revenue and Housing Zone) and Intiqal registers with interactive mapping capabilities.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive Map Interface**: Built with Leaflet for geographical data visualization
+- **Form Management**: Comprehensive dropdown-based form system for District, Tehsil, and Mouza selection
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Type Safety**: Full TypeScript implementation with proper type definitions
+- **Error Handling**: Robust error boundaries and loading states
+- **Accessibility**: ARIA labels and keyboard navigation support
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** - Latest React with concurrent features
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **React Router** - Client-side routing
+- **Leaflet** - Interactive maps
+- **ESLint** - Code linting and formatting
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📁 Project Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/           # Reusable UI components
+│   ├── utils/           # Utility components (Button, Dropdown)
+│   ├── Hero.tsx         # Hero section component
+│   ├── header.tsx       # Navigation header
+│   ├── footer.tsx       # Footer component
+│   ├── map.tsx          # Interactive map component
+│   └── ErrorBoundary.tsx # Error handling component
+├── pages/               # Route components
+│   ├── Home.tsx         # Landing page
+│   └── Registers.tsx    # Register management page
+├── hooks/               # Custom React hooks
+│   └── useRegisterForm.ts # Form state management
+├── types/               # TypeScript type definitions
+│   └── index.ts         # Shared interfaces
+├── shared/              # Shared data and utilities
+│   └── static.data.ts   # Static data (districts, tehsils, etc.)
+└── App.tsx              # Main application component
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚦 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues automatically
+- `npm run type-check` - Run TypeScript type checking
+- `npm run clean` - Clean build directory
+
+## 🗺️ Map Integration
+
+The application uses Leaflet for interactive mapping:
+
+- Satellite imagery from Esri
+- Error handling for network issues
+- Responsive map sizing
+- Accessibility support
+
+## 📱 Responsive Design
+
+- Mobile-first approach
+- Flexible grid layouts
+- Touch-friendly interface
+- Optimized for various screen sizes
+
+## 🔧 Development Guidelines
+
+### Code Style
+
+- Use TypeScript for all new components
+- Follow existing naming conventions
+- Implement proper error handling
+- Add accessibility attributes where needed
+
+### Component Structure
+
+```typescript
+interface ComponentProps {
+  // Define all props with proper types
+}
+
+export function Component({ prop1, prop2 }: ComponentProps) {
+  // Component implementation
+}
 ```
+
+### State Management
+
+- Use custom hooks for complex state logic
+- Implement proper form validation
+- Handle loading and error states
+
+## 🚀 Deployment
+
+1. Build the application:
+
+   ```bash
+   npm run build
+   ```
+
+2. The `dist` folder contains the production build
+3. Deploy the contents to your preferred hosting service
+
+## 📄 License
+
+This project is licensed under the MIT License.

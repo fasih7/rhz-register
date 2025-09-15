@@ -1,10 +1,16 @@
+import { BookOpen, LogIn } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-export function Header() {
+
+interface HeaderProps {
+  className?: string;
+}
+
+export function Header({ className = "" }: HeaderProps) {
   const navigate = useNavigate();
   return (
     <header
       style={{ backgroundColor: "#2c8949" }}
-      className="rounded-b-xl w-full"
+      className={`rounded-b-xl w-full ${className}`}
     >
       <nav className="flex items-center justify-between px-12 py-4.5">
         {/* Logo */}
@@ -20,15 +26,20 @@ export function Header() {
         </div>
 
         {/* Menu */}
-        <ul className="flex space-x-10 text-white text-sm font-medium tracking-wide">
-          <li
-            className="cursor-pointer hover:text-green-200"
+        <div className="hidden md:flex items-center space-x-8">
+          <button
             onClick={() => navigate("/registers")}
+            className="flex items-center space-x-2 text-white hover:text-green-200 transition-colors duration-200 group"
           >
-            📑 Registers
-          </li>
-          <li className="cursor-pointer hover:text-green-200">LOGIN</li>
-        </ul>
+            <BookOpen className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+            <span className="font-medium">Registers</span>
+          </button>
+
+          <button className="flex items-center space-x-2 text-white hover:text-green-200 transition-colors duration-200 group">
+            <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+            <span className="font-medium">Login</span>
+          </button>
+        </div>
       </nav>
     </header>
   );
